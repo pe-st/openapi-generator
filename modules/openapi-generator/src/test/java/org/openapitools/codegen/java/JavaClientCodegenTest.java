@@ -349,6 +349,18 @@ public class JavaClientCodegenTest {
         Assert.assertEquals(cm.getClassname(), "OtherObj");
     }
 
+    @Test
+    public void testDigitProperties() {
+        final OpenAPI openAPI = TestUtils.parseSpec("src/test/resources/3_0/issue_digits.yaml");
+        JavaClientCodegen codegen = new JavaClientCodegen();
+
+        Schema emvTags = openAPI.getComponents().getSchemas().get("EmvTags");
+        codegen.setOpenAPI(openAPI);
+        CodegenModel cm1 = codegen.fromModel("EmvTags", emvTags);
+        Assert.assertEquals(cm1.getVars().get(0).getBaseName(), "84");
+        Assert.assertEquals(cm1.getVars().get(0).getName(), "_84");
+    }
+
     private void ensureContainsFile(Map<String, String> generatedFiles, File root, String filename) {
         File file = new File(root, filename);
         String absoluteFilename = file.getAbsolutePath().replace("\\", "/");

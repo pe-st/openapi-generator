@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  title: example with properties starting with digits
+  version: "1.0"
+  license:
+    name: Apache-2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: http://localhost:8080
+paths:
+  /emv:
+    post:
+      summary: Accept EMV data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EmvTags'
+      responses:
+        201:
+          description: Successful response
+components:
+  schemas:
+    EmvTags:
+      title: EmvTags
+      type: object
+      description: Collection of EMV tags
+      properties:
+        84:
+          title: Dedicated Filename
+          type: string
+          description: The EMV AID as reported by ICC
